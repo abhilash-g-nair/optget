@@ -24,8 +24,7 @@ static void *optget_error(struct optget *optget) {
     return NULL;
 }
 
-static const struct optget_option *find_by_shortopt_in_options(char shortopt,
-                                                               const struct optget_option options[],
+static const struct optget_option *find_by_shortopt_in_options(char shortopt, const struct optget_option options[],
                                                                size_t options_len) {
     for (size_t i = 0; i < options_len; i++) {
         if (options[i].shortopt == shortopt) return &options[i];
@@ -37,16 +36,15 @@ static const struct optget_option *find_by_longopt_in_options(char *longopt, siz
                                                               const struct optget_option options[],
                                                               size_t options_len) {
     for (size_t i = 0; i < options_len; i++) {
-        if ((strlen(options[i].longopt) == longopt_len) &&
-            (strncmp(options[i].longopt, longopt, longopt_len) == 0)) {
+        if ((strlen(options[i].longopt) == longopt_len) && (strncmp(options[i].longopt, longopt, longopt_len) == 0)) {
             return &options[i];
         }
     }
     return NULL;
 }
 
-void optget_init(struct optget *optget, int argc, char *argv[],
-                 const struct optget_option options[], size_t options_len) {
+void optget_init(struct optget *optget, int argc, char *argv[], const struct optget_option options[],
+                 size_t options_len) {
     optget->argc = argc;
     optget->argv = argv;
     optget->options = options;
@@ -87,11 +85,10 @@ struct optget_optarg *optget_get(struct optget *optget) {
             return optget_error(optget);
         }
 
-        size_t longopt_len =
-            (arg_separator == NULL) ? strlen(longopt + 2) : arg_separator - (longopt + 2);
+        size_t longopt_len = (arg_separator == NULL) ? strlen(longopt + 2) : arg_separator - (longopt + 2);
 
-        const struct optget_option *option = find_by_longopt_in_options(
-            longopt + 2, longopt_len, optget->options, optget->options_len);
+        const struct optget_option *option =
+            find_by_longopt_in_options(longopt + 2, longopt_len, optget->options, optget->options_len);
 
         if (option == NULL) {
             sprintf(optget->err_msg, "unknown option %s", longopt);

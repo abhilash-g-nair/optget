@@ -34,7 +34,7 @@ struct optget {
     char err_msg[64];
 };
 
-void optget_init(struct optget *optget, int argc, char *argv[],
-                 const struct optget_option options[], size_t options_len);
+void optget_init(struct optget *optget, int argc, char *argv[], const struct optget_option options[],
+                 size_t options_len);
 struct optget_optarg *optget_get(struct optget *optget);
 char *optget_get_error(struct optget *optget);
